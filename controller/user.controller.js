@@ -34,8 +34,6 @@ class UserController {
                     }
                 });
             }
-            console.log(req.body);
-            console.log(req.files);
             const newUser = await userServices.updateUser(req.body, req.files?.avatar);
             return res.json(newUser);
         } catch (e) {

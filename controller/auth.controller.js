@@ -5,7 +5,7 @@ const ApiError = require('../exceptions/api.error');
 class AuthController {
     async registration(req, res, next) {
         try {
-            const errors = validationResult(req);
+            const errors = await validationResult(req);
             if (!errors.isEmpty()) {
                 errors.array().map(err => {
                     if (err.path === 'email') {
@@ -41,6 +41,23 @@ class AuthController {
             await authServices.logout(refreshToken);
             res.clearCookie('refreshToken');
             return res.sendStatus(204);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async resetPassword(req, res, next) {
+        try {
+            const errors = await validationResult(req);
+            if (!errors.isEmpty()) {
+                errors.array().map(err => {
+                    if (err.path === 'email') {
+                        next(ApiError.BadRequest('Почта введена не корректно'));
+                    }
+                })
+            }
+            const resp = await authServices.resetPassword(req.body);
+            return res.json(resp);
         } catch (e) {
             next(e);
         }

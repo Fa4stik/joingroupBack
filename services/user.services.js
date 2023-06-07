@@ -77,8 +77,7 @@ class UserServices {
         UPDATE userj
         SET ${updates.join(", ")}
         WHERE id = $1
-        RETURNING *
-    `;
+        RETURNING *`;
 
         // Execute the query
         const updateUser = await db.query(query, [id, ...values]);

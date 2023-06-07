@@ -6,6 +6,8 @@ const logRouter = require('./routes/log.routes');
 const authRouter = require('./routes/auth.routes');
 const vkRouter = require('./routes/vk.routes');
 const tgRouter = require('./routes/tg.routes');
+const instaRouter = require('./routes/insta.routes');
+const msgRouter = require('./routes/messengers.routes');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -23,12 +25,16 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use('/Avatar', express.static('Avatar'));
+app.use('/tgPhoto', express.static('tgPhoto'));
+app.use('/igPhoto', express.static('igPhoto'));
 app.use('/api', subscribeRouter);
 app.use('/api', userRouter);
 app.use('/api', logRouter);
 app.use('/api', authRouter);
 app.use('/api/vk', vkRouter);
 app.use('/api/tg', tgRouter);
+app.use('/api/ig', instaRouter);
+app.use('/api/msg', msgRouter);
 app.use(errorMiddleware);
 
 async function startApp() {
